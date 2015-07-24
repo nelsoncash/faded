@@ -1,0 +1,67 @@
+{
+  "name": "fog",
+  "version": "0.1.0",
+  "description": "Standalone Javascript Plugin for creating hinted scrollable views.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "gulp",
+    "prod": "gulp -p"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nelsoncash/fog.git"
+  },
+  "keywords": [
+    "scroll",
+    "list",
+    "nelsoncash",
+    "fog",
+    "fade"
+  ],
+  "author": "Nelson Cash",
+  "contributors": "FrankyMartz",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/nelsoncash/fog/issues"
+  },
+  "homepage": "https://github.com/nelsoncash/fog#readme",
+  "jshintConfig": {
+    "node": true,
+    "browser": true,
+    "browserify": true,
+    "devel": true,
+    "curly": true,
+    "eqeqeq": true,
+    "undef": true,
+    "forin": true,
+    "unused": true,
+    "multistr": true,
+    "bitwise": true,
+    "camelcase": true,
+    "immed": true,
+    "indent": 2,
+    "latedef": true,
+    "newcap": true,
+    "noarg": true,
+    "quotmark": "double",
+    "regexp": true,
+    "strict": true,
+    "trailing": true,
+    "smarttabs": true,
+    "globals": {}
+  },
+  "devDependencies": {
+    "browserify": "^11.0.0",
+    "bundle-collapser": "^1.2.1",
+    "gulp": "^3.9.0",
+    "gulp-notify": "^2.2.0",
+    "gulp-rename": "^1.2.2",
+    "gulp-size": "^1.2.3",
+    "gulp-uglify": "^1.2.0",
+    "gulp-util": "^3.0.6",
+    "vinyl-buffer": "^1.0.0",
+    "vinyl-source-stream": "^1.1.0",
+    "watchify": "^3.3.0"
+  }
+}
