@@ -14,4 +14,9 @@ var gulp = require("gulp");
 
 
 /* -------------------------------------------------------------------------- */
-gulp.task("default", ["browserify"]);
+gulp.task("default", ["browserify"], function(cb){
+  //if (!GLOBAL.isProduction) {
+    //gulp.start("watch");
+  //}
+  cb();
+});

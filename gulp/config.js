@@ -12,8 +12,15 @@
 module.exports = {
   src: ["./index.js"],
   dest: "./dist",
-  name: "fog.js",
+  test: "./spec/**/*[sS]pec.js",
+  fileName: "fog.js",
+  appName: "Fog",
   browserify: {
     paths: []
+  },
+  jasmine: {
+    verbose: true,
+    includeStackTrace: true,
+    timeout: 5000
   }
 };

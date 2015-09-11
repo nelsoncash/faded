@@ -1,0 +1,77 @@
+/* ========================================================================== *
+ * FOG DEMO - StyleSheet
+ * (C) 2015 Nelson Cash
+ * ========================================================================== */
+body {
+	font-family: 'Courier New', Helvetica Neue;
+	text-align: center;
+	color: #444;
+	font-weight: bold;
+	font-size: 14px;
+	-webkit-font-smoothing: antialiased;
+}
+a, a:visited {
+	color: #222;
+}
+a:hover {
+	color: #000;
+}
+button {
+	font-size: 0.9rem;
+	font-family: 'Helvetica Neue', Arial;
+	-webkit-font-smoothing: subpixel-antialiased;
+	padding: 0.25rem 1rem;
+	border: 1px solid #454e51;
+	border-radius: 0.25rem;
+	background-color: #FFF;
+	letter-spacing: 0.02rem;
+	cursor: pointer;
+	outline: none;
+}
+button:hover {
+	color: #FFF;
+	background-color: #454e51;
+	-webkit-font-smoothing: antialiased;
+	-webkit-outline: none;
+	outline: none;
+}
+button:focus {
+	outline:none;
+}
+.main {
+	height: 35rem;
+	max-width:25rem;
+	margin:3rem auto;
+	border-radius: 1rem;
+	color: #FFF;
+	background-color: #454e51;
+}
+.example_controls {
+	margin-top: 2rem;
+}
+
+/* Plug-In Specific --------------------------------------------------------- */
+
+/* Requirement(s):
+ * - Positioned Container
+ * - Y scroll Container
+ * - Hidden backface-visibility for container item(s)
+ */
+#example{
+	position: relative;
+	box-sizing: border-box;
+	width: 100%;
+	height: 100%;
+	padding: 0.75rem 2rem;
+	overflow-y: scroll;
+	list-style: none;
+	font-size: 16px;
+	line-height: 1.35em;
+}
+#example::-webkit-scrollbar {
+	display: none;
+}
+#example > li {
+	backface-visibility: hidden;
+	-webkit-backface-visibility: hidden;
+}

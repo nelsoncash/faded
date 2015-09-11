@@ -17,7 +17,6 @@ var allTaskDirectoryPath = path.join(__dirname, "task");
 var allTask = fs.readdirSync(allTaskDirectoryPath);
 
 allTask.forEach(function(task) {
-  console.log(task);
   require("./task/" + task);
 });
 
