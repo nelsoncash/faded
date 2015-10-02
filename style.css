@@ -5,23 +5,23 @@
 body {
 	font-family: 'Courier New', Helvetica Neue;
 	text-align: center;
-	color: #444;
+	color: #484a57;
 	font-weight: bold;
 	font-size: 14px;
 	-webkit-font-smoothing: antialiased;
 }
 a, a:visited {
-	color: #222;
+	color: #484a57;
 }
 a:hover {
-	color: #000;
+	color: #222;
 }
 button {
 	font-size: 0.9rem;
 	font-family: 'Helvetica Neue', Arial;
 	-webkit-font-smoothing: subpixel-antialiased;
 	padding: 0.25rem 1rem;
-	border: 1px solid #454e51;
+	border: 1px solid #484a57;
 	border-radius: 0.25rem;
 	background-color: #FFF;
 	letter-spacing: 0.02rem;
@@ -30,7 +30,7 @@ button {
 }
 button:hover {
 	color: #FFF;
-	background-color: #454e51;
+	background-color: #484a57;
 	-webkit-font-smoothing: antialiased;
 	-webkit-outline: none;
 	outline: none;
@@ -44,7 +44,7 @@ button:focus {
 	margin:3rem auto;
 	border-radius: 1rem;
 	color: #FFF;
-	background-color: #454e51;
+	background-color: #484a57;
 }
 .example_controls {
 	margin-top: 2rem;

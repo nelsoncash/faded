@@ -64,8 +64,8 @@
     fog.setOpts({
       style: {
         color: {
-          min: "rgb(7,17,76)",
-          max: "maroon"
+          min: "#ffbd80",
+          max: "#7ea2ab"
         }
       }
     });
