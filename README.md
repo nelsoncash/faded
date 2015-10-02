@@ -1,6 +1,8 @@
 # FOG
 *A standalone JavaScript plug-in for visually hinted lists. Yep, zero dependencies.*
 
+## Demo
+Have a look. [:cloud: DEMO :flashlight:](http://nelsoncash.github.io/fog/)
 
 ## Installation
 Add `./dist/fog.min.js` to your project.
