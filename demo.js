@@ -76,8 +76,11 @@
       range: 0.2,
       style: {
         color: {
-          min: "rgb(7,17,76,0.1)",
-          max: "cyan"
+          max: "#67545a",
+          min: "#c4725a"
+        },
+        opacity: {
+          min: 0
         }
       }
     });

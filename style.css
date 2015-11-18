@@ -2,12 +2,16 @@
  * FOG DEMO - StyleSheet
  * (C) 2015 Nelson Cash
  * ========================================================================== */
+* {
+	color: #484a57;
+}
 body {
 	font-family: 'Courier New', Helvetica Neue;
 	text-align: center;
 	color: #484a57;
 	font-weight: bold;
 	font-size: 14px;
+	background-color: #dae3e8;
 	-webkit-font-smoothing: antialiased;
 }
 a, a:visited {
@@ -44,7 +48,8 @@ button:focus {
 	margin:3rem auto;
 	border-radius: 1rem;
 	color: #FFF;
-	background-color: #484a57;
+	/*background-color: #484a57;*/
+	background-color: #FFF;
 }
 .example_controls {
 	margin-top: 2rem;
