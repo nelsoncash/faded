@@ -21,6 +21,7 @@
 
 var ArgsHandler = require("./lib/ArgsHandler.js");
 var raf = require("raf");
+var without = require("lodash/array/without");
 
 
 // FIXME: Percentages are not correctly rendered. Check calc values.
@@ -30,6 +31,7 @@ function Fog(element, opts){
   // Variable ==================================================================
 
   var _element = element;
+  var _oldOpts = {};
   var _opts = opts;
   var _rafFogHandle = 0;
   var _isRunning = false;
@@ -223,9 +225,17 @@ function Fog(element, opts){
 
 
   function _clearOpts(){
+    var oldAllStyle = Object.keys(_oldOpts.style);
+    var allStyle = Object.keys(_opts.style);
+    var allStyleToClear = without(oldAllStyle, allStyle);
+    if (!oldAllStyle.length || !allStyleToClear.length) {
+      return;
+    }
     var allChild = [].slice.call(_element.children);
     allChild.forEach(function(child){
-      child.removeAttribute("style");
+      allStyleToClear.forEach(function(style){
+        child.style[style] = "";
+      });
     });
   }
 
@@ -250,12 +260,11 @@ function Fog(element, opts){
   // TODO: test with es6 promise
   this.setOpts = function setOpts(allOption){
     var isSuccess = false;
-    //if (!_isRunning) {
-      _clearOpts();
-      _opts = ArgsHandler.resolveAllOption(allOption);
-      _rafFog();
-      isSuccess = true;
-    //}
+    _oldOpts = _opts;
+    _opts = ArgsHandler.resolveAllOption(allOption);
+    _rafFog();
+    _clearOpts();
+    isSuccess = true;
     return isSuccess;
   };
 
