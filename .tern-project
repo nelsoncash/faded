@@ -1,0 +1,12 @@
+{
+  "libs": [
+    "browser"
+  ],
+  "plugins": {
+    "commonjs": {},
+    "complete_strings": {},
+    "doc_comment": {
+      "strong": true
+    }
+  }
+}
