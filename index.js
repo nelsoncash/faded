@@ -21,7 +21,7 @@
 
 var ArgsHandler = require("./lib/ArgsHandler.js");
 var raf = require("raf");
-var without = require("lodash/array/without");
+var helper = require("./lib/util/helper.js");
 
 
 // FIXME: Percentages are not correctly rendered. Check calc values.
@@ -227,7 +227,7 @@ function Fog(element, opts){
   function _clearOpts(){
     var oldAllStyle = Object.keys(_oldOpts.style);
     var allStyle = Object.keys(_opts.style);
-    var allStyleToClear = without(oldAllStyle, allStyle);
+    var allStyleToClear = helper.arrayDifference(oldAllStyle, allStyle)
     if (!oldAllStyle.length || !allStyleToClear.length) {
       return;
     }

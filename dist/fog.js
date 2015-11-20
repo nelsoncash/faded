@@ -21,8 +21,8 @@
  ******************************************************************************/
 
 var ArgsHandler = _dereq_(2);
-var raf = _dereq_(42);
-var without = _dereq_(10);
+var raf = _dereq_(34);
+var helper = _dereq_(5);
 
 
 // FIXME: Percentages are not correctly rendered. Check calc values.
@@ -228,7 +228,7 @@ function Fog(element, opts){
   function _clearOpts(){
     var oldAllStyle = Object.keys(_oldOpts.style);
     var allStyle = Object.keys(_opts.style);
-    var allStyleToClear = without(oldAllStyle, allStyle);
+    var allStyleToClear = helper.arrayDifference(oldAllStyle, allStyle)
     if (!oldAllStyle.length || !allStyleToClear.length) {
       return;
     }
@@ -288,7 +288,7 @@ module.exports = function(element, opts){
 };
 
 
-},{"10":10,"2":2,"42":42}],2:[function(_dereq_,module,exports){
+},{"2":2,"34":34,"5":5}],2:[function(_dereq_,module,exports){
 "use strict";
 /* =========================================================================== *
  * @module ArgsHandler
@@ -313,11 +313,11 @@ module.exports = function(element, opts){
  * @copyright 2015 Nelson Cash
  * ========================================================================== */
 
-var isElement = _dereq_(32);
-var isPlainObject = _dereq_(37);
-var isString = _dereq_(38);
-var isNumber = _dereq_(35);
-var Color = _dereq_(9);
+var isElement = _dereq_(24);
+var isPlainObject = _dereq_(29);
+var isString = _dereq_(30);
+var isNumber = _dereq_(27);
+var Color = _dereq_(10);
 
 var config = _dereq_(3);
 var eLog = _dereq_(4).error;
@@ -364,15 +364,15 @@ function _createCSSQueryString(str){
  * @return {?HTMLElement} First HTMLElement matching criteria
  */
 function _getListElementByString(str){
-  var identifier = str[0];
+  var identifier = str.trim()[0];
   var element = null;
   if (identifier === "#") {
     var queryString = str.slice(1);
     element = document.getElementById(queryString);
   } else if (identifier === ".") {
     var queryString = _createCSSQueryString(str);
-    var allElement = Document.getElementsByClassName(queryString);
-    if (allElement.length >= 0) {
+    var allElement = document.getElementsByClassName(queryString);
+    if (allElement.length !== 1) {
       eLog("Argument 'element' MUST reference single unique <HTMLElement>.");
     }
     element = allElement[0];
@@ -501,7 +501,7 @@ exports.resolveAllOption = function resolveAllOption(opts){
 };
 
 
-},{"3":3,"32":32,"35":35,"37":37,"38":38,"4":4,"9":9}],3:[function(_dereq_,module,exports){
+},{"10":10,"24":24,"27":27,"29":29,"3":3,"30":30,"4":4}],3:[function(_dereq_,module,exports){
 "use strict";
 /*! =========================================================================== *
  * PlugConfig.js
@@ -531,7 +531,6 @@ module.exports = {
  * Log.js
  *
  * @copyright 2015 Nelson Cash
- *
  * https://github.com/nelsoncash/fog
  ******************************************************************************/
 
@@ -546,8 +545,36 @@ exports.error = function error(){
   throw new Error(message, config.file);
 };
 
-
 },{"3":3}],5:[function(_dereq_,module,exports){
+"use strict";
+/*!*****************************************************************************
+ * Helper.js
+ *
+ * @copyright 2015 Nelson Cash
+ * @URL https://github.com/nelsoncash/fog
+ ******************************************************************************/
+
+var eLog = _dereq_(4);
+
+/**
+ * arrayDifference
+ *
+ * @param {Array} first
+ * @param {Array} second
+ * @return {Array} <Array> with difference between arguments
+ */
+exports.arrayDifference = function arrayDifference(first, second){
+  if (!Boolean(Array.isArray(first) && Array.isArray(second))) {
+    eLog("(Helper.arrayExclusiveIntersect): two array arguments required.")
+  }
+  return first.filter(function(itemFirst){
+    return !second.some(function(itemSecond){
+      return Boolean(itemFirst === itemSecond);
+    });
+  });
+};
+
+},{"4":4}],6:[function(_dereq_,module,exports){
 /* MIT license */
 
 module.exports = {
@@ -1247,8 +1274,8 @@ for (var key in cssKeywords) {
   reverseKeywords[JSON.stringify(cssKeywords[key])] = key;
 }
 
-},{}],6:[function(_dereq_,module,exports){
-var conversions = _dereq_(5);
+},{}],7:[function(_dereq_,module,exports){
+var conversions = _dereq_(6);
 
 var convert = function() {
    return new Converter();
@@ -1340,7 +1367,7 @@ Converter.prototype.getValues = function(space) {
 });
 
 module.exports = convert;
-},{"5":5}],7:[function(_dereq_,module,exports){
+},{"6":6}],8:[function(_dereq_,module,exports){
 module.exports={
 	"aliceblue": [240, 248, 255],
 	"antiquewhite": [250, 235, 215],
@@ -1491,9 +1518,9 @@ module.exports={
 	"yellow": [255, 255, 0],
 	"yellowgreen": [154, 205, 50]
 }
-},{}],8:[function(_dereq_,module,exports){
+},{}],9:[function(_dereq_,module,exports){
 /* MIT license */
-var colorNames = _dereq_(7);
+var colorNames = _dereq_(8);
 
 module.exports = {
    getRgba: getRgba,
@@ -1714,10 +1741,10 @@ for (var name in colorNames) {
    reverseNames[colorNames[name]] = name;
 }
 
-},{"7":7}],9:[function(_dereq_,module,exports){
+},{"8":8}],10:[function(_dereq_,module,exports){
 /* MIT license */
-var convert = _dereq_(6),
-    string = _dereq_(8);
+var convert = _dereq_(7),
+    string = _dereq_(9);
 
 var Color = function(obj) {
   if (obj instanceof Color) return obj;
@@ -2148,187 +2175,8 @@ Color.prototype.setChannel = function(space, index, val) {
 
 module.exports = Color;
 
-},{"6":6,"8":8}],10:[function(_dereq_,module,exports){
-var baseDifference = _dereq_(13),
-    isArrayLike = _dereq_(25),
-    restParam = _dereq_(11);
-
-/**
- * Creates an array excluding all provided values using
- * [`SameValueZero`](http://ecma-international.org/ecma-262/6.0/#sec-samevaluezero)
- * for equality comparisons.
- *
- * @static
- * @memberOf _
- * @category Array
- * @param {Array} array The array to filter.
- * @param {...*} [values] The values to exclude.
- * @returns {Array} Returns the new array of filtered values.
- * @example
- *
- * _.without([1, 2, 1, 3], 1, 2);
- * // => [3]
- */
-var without = restParam(function(array, values) {
-  return isArrayLike(array)
-    ? baseDifference(array, values)
-    : [];
-});
-
-module.exports = without;
-
-},{"11":11,"13":13,"25":25}],11:[function(_dereq_,module,exports){
-/** Used as the `TypeError` message for "Functions" methods. */
-var FUNC_ERROR_TEXT = 'Expected a function';
-
-/* Native method references for those with the same name as other `lodash` methods. */
-var nativeMax = Math.max;
-
-/**
- * Creates a function that invokes `func` with the `this` binding of the
- * created function and arguments from `start` and beyond provided as an array.
- *
- * **Note:** This method is based on the [rest parameter](https://developer.mozilla.org/Web/JavaScript/Reference/Functions/rest_parameters).
- *
- * @static
- * @memberOf _
- * @category Function
- * @param {Function} func The function to apply a rest parameter to.
- * @param {number} [start=func.length-1] The start position of the rest parameter.
- * @returns {Function} Returns the new function.
- * @example
- *
- * var say = _.restParam(function(what, names) {
- *   return what + ' ' + _.initial(names).join(', ') +
- *     (_.size(names) > 1 ? ', & ' : '') + _.last(names);
- * });
- *
- * say('hello', 'fred', 'barney', 'pebbles');
- * // => 'hello fred, barney, & pebbles'
- */
-function restParam(func, start) {
-  if (typeof func != 'function') {
-    throw new TypeError(FUNC_ERROR_TEXT);
-  }
-  start = nativeMax(start === undefined ? (func.length - 1) : (+start || 0), 0);
-  return function() {
-    var args = arguments,
-        index = -1,
-        length = nativeMax(args.length - start, 0),
-        rest = Array(length);
-
-    while (++index < length) {
-      rest[index] = args[start + index];
-    }
-    switch (start) {
-      case 0: return func.call(this, rest);
-      case 1: return func.call(this, args[0], rest);
-      case 2: return func.call(this, args[0], args[1], rest);
-    }
-    var otherArgs = Array(start + 1);
-    index = -1;
-    while (++index < start) {
-      otherArgs[index] = args[index];
-    }
-    otherArgs[start] = rest;
-    return func.apply(this, otherArgs);
-  };
-}
-
-module.exports = restParam;
-
-},{}],12:[function(_dereq_,module,exports){
-(function (global){
-var cachePush = _dereq_(19),
-    getNative = _dereq_(23);
-
-/** Native method references. */
-var Set = getNative(global, 'Set');
-
-/* Native method references for those with the same name as other `lodash` methods. */
-var nativeCreate = getNative(Object, 'create');
-
-/**
- *
- * Creates a cache object to store unique values.
- *
- * @private
- * @param {Array} [values] The values to cache.
- */
-function SetCache(values) {
-  var length = values ? values.length : 0;
-
-  this.data = { 'hash': nativeCreate(null), 'set': new Set };
-  while (length--) {
-    this.push(values[length]);
-  }
-}
-
-// Add functions to the `Set` cache.
-SetCache.prototype.push = cachePush;
-
-module.exports = SetCache;
-
-}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"19":19,"23":23}],13:[function(_dereq_,module,exports){
-var baseIndexOf = _dereq_(16),
-    cacheIndexOf = _dereq_(18),
-    createCache = _dereq_(21);
-
-/** Used as the size to enable large array optimizations. */
-var LARGE_ARRAY_SIZE = 200;
-
-/**
- * The base implementation of `_.difference` which accepts a single array
- * of values to exclude.
- *
- * @private
- * @param {Array} array The array to inspect.
- * @param {Array} values The values to exclude.
- * @returns {Array} Returns the new array of filtered values.
- */
-function baseDifference(array, values) {
-  var length = array ? array.length : 0,
-      result = [];
-
-  if (!length) {
-    return result;
-  }
-  var index = -1,
-      indexOf = baseIndexOf,
-      isCommon = true,
-      cache = (isCommon && values.length >= LARGE_ARRAY_SIZE) ? createCache(values) : null,
-      valuesLength = values.length;
-
-  if (cache) {
-    indexOf = cacheIndexOf;
-    isCommon = false;
-    values = cache;
-  }
-  outer:
-  while (++index < length) {
-    var value = array[index];
-
-    if (isCommon && value === value) {
-      var valuesIndex = valuesLength;
-      while (valuesIndex--) {
-        if (values[valuesIndex] === value) {
-          continue outer;
-        }
-      }
-      result.push(value);
-    }
-    else if (indexOf(values, value, 0) < 0) {
-      result.push(value);
-    }
-  }
-  return result;
-}
-
-module.exports = baseDifference;
-
-},{"16":16,"18":18,"21":21}],14:[function(_dereq_,module,exports){
-var createBaseFor = _dereq_(20);
+},{"7":7,"9":9}],11:[function(_dereq_,module,exports){
+var createBaseFor = _dereq_(14);
 
 /**
  * The base implementation of `baseForIn` and `baseForOwn` which iterates
@@ -2346,9 +2194,9 @@ var baseFor = createBaseFor();
 
 module.exports = baseFor;
 
-},{"20":20}],15:[function(_dereq_,module,exports){
-var baseFor = _dereq_(14),
-    keysIn = _dereq_(39);
+},{"14":14}],12:[function(_dereq_,module,exports){
+var baseFor = _dereq_(11),
+    keysIn = _dereq_(31);
 
 /**
  * The base implementation of `_.forIn` without support for callback
@@ -2365,36 +2213,7 @@ function baseForIn(object, iteratee) {
 
 module.exports = baseForIn;
 
-},{"14":14,"39":39}],16:[function(_dereq_,module,exports){
-var indexOfNaN = _dereq_(24);
-
-/**
- * The base implementation of `_.indexOf` without support for binary searches.
- *
- * @private
- * @param {Array} array The array to search.
- * @param {*} value The value to search for.
- * @param {number} fromIndex The index to search from.
- * @returns {number} Returns the index of the matched value, else `-1`.
- */
-function baseIndexOf(array, value, fromIndex) {
-  if (value !== value) {
-    return indexOfNaN(array, fromIndex);
-  }
-  var index = fromIndex - 1,
-      length = array.length;
-
-  while (++index < length) {
-    if (array[index] === value) {
-      return index;
-    }
-  }
-  return -1;
-}
-
-module.exports = baseIndexOf;
-
-},{"24":24}],17:[function(_dereq_,module,exports){
+},{"11":11,"31":31}],13:[function(_dereq_,module,exports){
 /**
  * The base implementation of `_.property` without support for deep paths.
  *
@@ -2410,51 +2229,8 @@ function baseProperty(key) {
 
 module.exports = baseProperty;
 
-},{}],18:[function(_dereq_,module,exports){
-var isObject = _dereq_(36);
-
-/**
- * Checks if `value` is in `cache` mimicking the return signature of
- * `_.indexOf` by returning `0` if the value is found, else `-1`.
- *
- * @private
- * @param {Object} cache The cache to search.
- * @param {*} value The value to search for.
- * @returns {number} Returns `0` if `value` is found, else `-1`.
- */
-function cacheIndexOf(cache, value) {
-  var data = cache.data,
-      result = (typeof value == 'string' || isObject(value)) ? data.set.has(value) : data.hash[value];
-
-  return result ? 0 : -1;
-}
-
-module.exports = cacheIndexOf;
-
-},{"36":36}],19:[function(_dereq_,module,exports){
-var isObject = _dereq_(36);
-
-/**
- * Adds `value` to the cache.
- *
- * @private
- * @name push
- * @memberOf SetCache
- * @param {*} value The value to cache.
- */
-function cachePush(value) {
-  var data = this.data;
-  if (typeof value == 'string' || isObject(value)) {
-    data.set.add(value);
-  } else {
-    data.hash[value] = true;
-  }
-}
-
-module.exports = cachePush;
-
-},{"36":36}],20:[function(_dereq_,module,exports){
-var toObject = _dereq_(29);
+},{}],14:[function(_dereq_,module,exports){
+var toObject = _dereq_(21);
 
 /**
  * Creates a base function for `_.forIn` or `_.forInRight`.
@@ -2482,33 +2258,8 @@ function createBaseFor(fromRight) {
 
 module.exports = createBaseFor;
 
-},{"29":29}],21:[function(_dereq_,module,exports){
-(function (global){
-var SetCache = _dereq_(12),
-    getNative = _dereq_(23);
-
-/** Native method references. */
-var Set = getNative(global, 'Set');
-
-/* Native method references for those with the same name as other `lodash` methods. */
-var nativeCreate = getNative(Object, 'create');
-
-/**
- * Creates a `Set` cache object to optimize linear searches of large arrays.
- *
- * @private
- * @param {Array} [values] The values to cache.
- * @returns {null|Object} Returns the new cache object if `Set` is supported, else `null`.
- */
-function createCache(values) {
-  return (nativeCreate && Set) ? new SetCache(values) : null;
-}
-
-module.exports = createCache;
-
-}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"12":12,"23":23}],22:[function(_dereq_,module,exports){
-var baseProperty = _dereq_(17);
+},{"21":21}],15:[function(_dereq_,module,exports){
+var baseProperty = _dereq_(13);
 
 /**
  * Gets the "length" property value of `object`.
@@ -2524,8 +2275,8 @@ var getLength = baseProperty('length');
 
 module.exports = getLength;
 
-},{"17":17}],23:[function(_dereq_,module,exports){
-var isNative = _dereq_(34);
+},{"13":13}],16:[function(_dereq_,module,exports){
+var isNative = _dereq_(26);
 
 /**
  * Gets the native function at `key` of `object`.
@@ -2542,34 +2293,9 @@ function getNative(object, key) {
 
 module.exports = getNative;
 
-},{"34":34}],24:[function(_dereq_,module,exports){
-/**
- * Gets the index at which the first occurrence of `NaN` is found in `array`.
- *
- * @private
- * @param {Array} array The array to search.
- * @param {number} fromIndex The index to search from.
- * @param {boolean} [fromRight] Specify iterating from right to left.
- * @returns {number} Returns the index of the matched `NaN`, else `-1`.
- */
-function indexOfNaN(array, fromIndex, fromRight) {
-  var length = array.length,
-      index = fromIndex + (fromRight ? 0 : -1);
-
-  while ((fromRight ? index-- : ++index < length)) {
-    var other = array[index];
-    if (other !== other) {
-      return index;
-    }
-  }
-  return -1;
-}
-
-module.exports = indexOfNaN;
-
-},{}],25:[function(_dereq_,module,exports){
-var getLength = _dereq_(22),
-    isLength = _dereq_(27);
+},{"26":26}],17:[function(_dereq_,module,exports){
+var getLength = _dereq_(15),
+    isLength = _dereq_(19);
 
 /**
  * Checks if `value` is array-like.
@@ -2584,7 +2310,7 @@ function isArrayLike(value) {
 
 module.exports = isArrayLike;
 
-},{"22":22,"27":27}],26:[function(_dereq_,module,exports){
+},{"15":15,"19":19}],18:[function(_dereq_,module,exports){
 /** Used to detect unsigned integer values. */
 var reIsUint = /^\d+$/;
 
@@ -2610,7 +2336,7 @@ function isIndex(value, length) {
 
 module.exports = isIndex;
 
-},{}],27:[function(_dereq_,module,exports){
+},{}],19:[function(_dereq_,module,exports){
 /**
  * Used as the [maximum length](http://ecma-international.org/ecma-262/6.0/#sec-number.max_safe_integer)
  * of an array-like value.
@@ -2632,7 +2358,7 @@ function isLength(value) {
 
 module.exports = isLength;
 
-},{}],28:[function(_dereq_,module,exports){
+},{}],20:[function(_dereq_,module,exports){
 /**
  * Checks if `value` is object-like.
  *
@@ -2646,8 +2372,8 @@ function isObjectLike(value) {
 
 module.exports = isObjectLike;
 
-},{}],29:[function(_dereq_,module,exports){
-var isObject = _dereq_(36);
+},{}],21:[function(_dereq_,module,exports){
+var isObject = _dereq_(28);
 
 /**
  * Converts `value` to an object if it's not one.
@@ -2662,9 +2388,9 @@ function toObject(value) {
 
 module.exports = toObject;
 
-},{"36":36}],30:[function(_dereq_,module,exports){
-var isArrayLike = _dereq_(25),
-    isObjectLike = _dereq_(28);
+},{"28":28}],22:[function(_dereq_,module,exports){
+var isArrayLike = _dereq_(17),
+    isObjectLike = _dereq_(20);
 
 /** Used for native method references. */
 var objectProto = Object.prototype;
@@ -2698,10 +2424,10 @@ function isArguments(value) {
 
 module.exports = isArguments;
 
-},{"25":25,"28":28}],31:[function(_dereq_,module,exports){
-var getNative = _dereq_(23),
-    isLength = _dereq_(27),
-    isObjectLike = _dereq_(28);
+},{"17":17,"20":20}],23:[function(_dereq_,module,exports){
+var getNative = _dereq_(16),
+    isLength = _dereq_(19),
+    isObjectLike = _dereq_(20);
 
 /** `Object#toString` result references. */
 var arrayTag = '[object Array]';
@@ -2740,9 +2466,9 @@ var isArray = nativeIsArray || function(value) {
 
 module.exports = isArray;
 
-},{"23":23,"27":27,"28":28}],32:[function(_dereq_,module,exports){
-var isObjectLike = _dereq_(28),
-    isPlainObject = _dereq_(37);
+},{"16":16,"19":19,"20":20}],24:[function(_dereq_,module,exports){
+var isObjectLike = _dereq_(20),
+    isPlainObject = _dereq_(29);
 
 /**
  * Checks if `value` is a DOM element.
@@ -2766,8 +2492,8 @@ function isElement(value) {
 
 module.exports = isElement;
 
-},{"28":28,"37":37}],33:[function(_dereq_,module,exports){
-var isObject = _dereq_(36);
+},{"20":20,"29":29}],25:[function(_dereq_,module,exports){
+var isObject = _dereq_(28);
 
 /** `Object#toString` result references. */
 var funcTag = '[object Function]';
@@ -2806,9 +2532,9 @@ function isFunction(value) {
 
 module.exports = isFunction;
 
-},{"36":36}],34:[function(_dereq_,module,exports){
-var isFunction = _dereq_(33),
-    isObjectLike = _dereq_(28);
+},{"28":28}],26:[function(_dereq_,module,exports){
+var isFunction = _dereq_(25),
+    isObjectLike = _dereq_(20);
 
 /** Used to detect host constructors (Safari > 5). */
 var reIsHostCtor = /^\[object .+?Constructor\]$/;
@@ -2856,8 +2582,8 @@ function isNative(value) {
 
 module.exports = isNative;
 
-},{"28":28,"33":33}],35:[function(_dereq_,module,exports){
-var isObjectLike = _dereq_(28);
+},{"20":20,"25":25}],27:[function(_dereq_,module,exports){
+var isObjectLike = _dereq_(20);
 
 /** `Object#toString` result references. */
 var numberTag = '[object Number]';
@@ -2899,7 +2625,7 @@ function isNumber(value) {
 
 module.exports = isNumber;
 
-},{"28":28}],36:[function(_dereq_,module,exports){
+},{"20":20}],28:[function(_dereq_,module,exports){
 /**
  * Checks if `value` is the [language type](https://es5.github.io/#x8) of `Object`.
  * (e.g. arrays, functions, objects, regexes, `new Number(0)`, and `new String('')`)
@@ -2929,10 +2655,10 @@ function isObject(value) {
 
 module.exports = isObject;
 
-},{}],37:[function(_dereq_,module,exports){
-var baseForIn = _dereq_(15),
-    isArguments = _dereq_(30),
-    isObjectLike = _dereq_(28);
+},{}],29:[function(_dereq_,module,exports){
+var baseForIn = _dereq_(12),
+    isArguments = _dereq_(22),
+    isObjectLike = _dereq_(20);
 
 /** `Object#toString` result references. */
 var objectTag = '[object Object]';
@@ -3002,8 +2728,8 @@ function isPlainObject(value) {
 
 module.exports = isPlainObject;
 
-},{"15":15,"28":28,"30":30}],38:[function(_dereq_,module,exports){
-var isObjectLike = _dereq_(28);
+},{"12":12,"20":20,"22":22}],30:[function(_dereq_,module,exports){
+var isObjectLike = _dereq_(20);
 
 /** `Object#toString` result references. */
 var stringTag = '[object String]';
@@ -3039,12 +2765,12 @@ function isString(value) {
 
 module.exports = isString;
 
-},{"28":28}],39:[function(_dereq_,module,exports){
-var isArguments = _dereq_(30),
-    isArray = _dereq_(31),
-    isIndex = _dereq_(26),
-    isLength = _dereq_(27),
-    isObject = _dereq_(36);
+},{"20":20}],31:[function(_dereq_,module,exports){
+var isArguments = _dereq_(22),
+    isArray = _dereq_(23),
+    isIndex = _dereq_(18),
+    isLength = _dereq_(19),
+    isObject = _dereq_(28);
 
 /** Used for native method references. */
 var objectProto = Object.prototype;
@@ -3105,7 +2831,7 @@ function keysIn(object) {
 
 module.exports = keysIn;
 
-},{"26":26,"27":27,"30":30,"31":31,"36":36}],40:[function(_dereq_,module,exports){
+},{"18":18,"19":19,"22":22,"23":23,"28":28}],32:[function(_dereq_,module,exports){
 (function (process){
 // Generated by CoffeeScript 1.7.1
 (function() {
@@ -3140,8 +2866,8 @@ module.exports = keysIn;
 
 }).call(this);
 
-}).call(this,_dereq_(41))
-},{"41":41}],41:[function(_dereq_,module,exports){
+}).call(this,_dereq_(33))
+},{"33":33}],33:[function(_dereq_,module,exports){
 // shim for using process in browser
 
 var process = module.exports = {};
@@ -3234,8 +2960,8 @@ process.chdir = function (dir) {
 };
 process.umask = function() { return 0; };
 
-},{}],42:[function(_dereq_,module,exports){
-var now = _dereq_(40)
+},{}],34:[function(_dereq_,module,exports){
+var now = _dereq_(32)
   , global = typeof window === 'undefined' ? {} : window
   , vendors = ['moz', 'webkit']
   , suffix = 'AnimationFrame'
@@ -3304,5 +3030,5 @@ module.exports.cancel = function() {
   caf.apply(global, arguments)
 }
 
-},{"40":40}]},{},[1])(1)
+},{"32":32}]},{},[1])(1)
 });
