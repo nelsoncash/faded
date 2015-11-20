@@ -43,14 +43,15 @@ function(Fog){
 
 **Restriction:**
 * Only *ONE* `HTMLElement` node reference permitted
+* **NO** tree traversal (looks for element with all specified class's)
 
 **Ex:**
 ```js
 // HTMLElement ID
-Fog("listID");
+Fog("#listID");
 
 // HTMLElement class
-Fog("list_class_name");
+Fog(".list_class_name.active");
 
 // HTMLElement reference
 var node = document.getElementById("listID");
