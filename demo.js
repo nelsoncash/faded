@@ -48,7 +48,7 @@
 
   populateContainer(65);
   
-  var fog = window.Fog(container);
+  var fog = window.Fog(".example.active");
 
   opacity.addEventListener("click", function(){
     fog.setOpts({
