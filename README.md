@@ -1,4 +1,4 @@
-# FOG
+# FADED
 *A standalone JavaScript plug-in for visually hinted lists. Yep, zero dependencies.*
 
 ## Demo

@@ -1,5 +1,5 @@
 {
-  "name": "fog",
+  "name": "faded",
   "version": "0.1.0",
   "description": "Standalone Javascript Plugin for creating visually hinted scroll views.",
   "main": "./dist/fog.js",
@@ -19,6 +19,7 @@
     "list",
     "fog",
     "fade",
+    "faded",
     "vanish",
     "blend"
   ],
