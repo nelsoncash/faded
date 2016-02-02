@@ -2,7 +2,7 @@
   "name": "fog",
   "version": "0.1.0",
   "description": "Standalone Javascript Plugin for creating visually hinted scroll views.",
-  "main": "index.js",
+  "main": "./dist/fog.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "gulp",
@@ -13,12 +13,14 @@
     "url": "git+https://github.com/nelsoncash/fog.git"
   },
   "keywords": [
+    "nelsoncash",
+    "scrollbar",
     "scroll",
     "list",
-    "nelsoncash",
     "fog",
     "fade",
-    "vanish"
+    "vanish",
+    "blend"
   ],
   "author": "Nelson Cash",
   "contributors": "FrankyMartz",
