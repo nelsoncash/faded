@@ -1,6 +1,6 @@
 "use strict";
 /*!*****************************************************************************
- * nelsoncash/fog
+ * nelsoncash/faded
  *
  * @typedef {String|HTMLElement} container - Reference for plugin application
  *
@@ -16,7 +16,7 @@
  *
  *
  * @copyright 2015 Nelson Cash
- * @URL https://github.com/nelsoncash/fog
+ * @URL https://github.com/nelsoncash/faded
  ******************************************************************************/
 
 var ArgsHandler = require("./lib/ArgsHandler.js");
@@ -26,14 +26,14 @@ var helper = require("./lib/util/helper.js");
 
 // FIXME: Percentages are not correctly rendered. Check calc values.
 
-function Fog(element, opts){
+function Fade(element, opts){
 
   // Variable ==================================================================
 
   var _element = element;
   var _oldOpts = {};
   var _opts = opts;
-  var _rafFogHandle = 0;
+  var _rafFadeHandle = 0;
   var _isRunning = false;
 
 
@@ -41,14 +41,14 @@ function Fog(element, opts){
 
   // Event Handler -------------------------------------------------------------
 
-  function _rafFog(){
-    _rafFogHandle = raf(_render);
-    return _rafFogHandle;
+  function _rafFade(){
+    _rafFadeHandle = raf(_render);
+    return _rafFadeHandle;
   }
 
   function _onScrollHandler(){
     if (!_isRunning) {
-      _rafFog();
+      _rafFade();
     }
     return true;
   }
@@ -143,7 +143,7 @@ function Fog(element, opts){
     function calcListBottomEdgeStyleMin(min, max){
       if (scrollBottom > lastChildBottom) {
         return max;
-        
+
       } else if (scrollBottom > lastChildTop) {
         return _calcScrollStyleMin(
           _calcRangeRelPos(scrollBottom, lastChildTop, lastChildBottom),
@@ -151,7 +151,7 @@ function Fog(element, opts){
           max,
           false
         );
- 
+
       } else {
         return min;
       }
@@ -164,7 +164,7 @@ function Fog(element, opts){
       result.bottom = calcListBottomEdgeStyleMin(min, max);
       return result;
     }
-    
+
 
     // Calculate Layout
     allChild.forEach(function(child, index){
@@ -247,9 +247,9 @@ function Fog(element, opts){
      _element.removeEventListener("scroll", _onScrollHandler);
      isSuccess = true;
     }
-    if (_isRunning && _rafFogHandle) {
-      raf.cancel(_rafFogHandle);
-      _rafFogHandle = 0;
+    if (_isRunning && _rafFadeHandle) {
+      raf.cancel(_rafFadeHandle);
+      _rafFadeHandle = 0;
       isSuccess = true;
     }
     return isSuccess;
@@ -262,7 +262,7 @@ function Fog(element, opts){
     var isSuccess = false;
     _oldOpts = _opts;
     _opts = ArgsHandler.resolveAllOption(allOption);
-    _rafFog();
+    _rafFade();
     _clearOpts();
     isSuccess = true;
     return isSuccess;
@@ -283,6 +283,6 @@ function Fog(element, opts){
 module.exports = function(element, opts){
   element = ArgsHandler.resolveList(element);
   opts = ArgsHandler.resolveAllOption(opts);
-  return new Fog(element, opts);
+  return new Fade(element, opts);
 };
 

@@ -13,8 +13,8 @@ module.exports = {
   src: ["./index.js"],
   dest: "./dist",
   test: "./spec/**/*[sS]pec.js",
-  fileName: "fog.js",
-  appName: "Fog",
+  fileName: "faded.js",
+  appName: "Faded",
   browserify: {
     paths: []
   },

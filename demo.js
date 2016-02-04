@@ -1,5 +1,5 @@
 /* ========================================================================== *
- * Fog Demo - Javascript
+ * Faded Demo - Javascript
  * (C) 2015 Nelson Cash
  * ========================================================================== */
 
@@ -38,7 +38,7 @@
       var item = document.createElement("li");
       var randomIndex = Math.floor(Math.random() * adjCount);
       item.innerText = [
-        "fog",
+        "faded",
         "is",
         adjective[randomIndex]
       ].join(" ");
@@ -47,11 +47,11 @@
   }
 
   populateContainer(65);
-  
-  var fog = window.Fog(".example.active");
+
+  var faded = window.Faded(".example.active");
 
   opacity.addEventListener("click", function(){
-    fog.setOpts({
+    faded.setOpts({
       style: {
         opacity: {
           min: 0.1
@@ -61,7 +61,7 @@
   });
 
   color.addEventListener("click", function(){
-    fog.setOpts({
+    faded.setOpts({
       style: {
         color: {
           min: "rgb(7,17,76)",
@@ -72,7 +72,7 @@
   });
 
   shazam.addEventListener("click", function(){
-    fog.setOpts({
+    faded.setOpts({
       range: 0.2,
       style: {
         color: {
