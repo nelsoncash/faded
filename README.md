@@ -2,10 +2,10 @@
 *A standalone JavaScript plug-in for visually hinted lists. Yep, zero dependencies.*
 
 ## Demo
-Have a look. [:cloud: DEMO :flashlight:](http://nelsoncash.github.io/fog/)
+Have a look. [:cloud: DEMO :flashlight:](http://nelsoncash.github.io/faded/)
 
 ## Installation
-Add `./dist/fog.min.js` to your project.
+Add `./dist/faded.min.js` to your project.
 
 
 ## Usage
@@ -13,29 +13,29 @@ Built with a [UMD](https://github.com/umdjs/umd) (Universal Module Definition) p
 ### Plain JavaScript
 Insert script into your HTML.
 ```html
-<script type="text/javascript" src="./path/to/fog.min.js"></script>
+<script type="text/javascript" src="./path/to/faded.min.js"></script>
 ```
-Fog constructor is then attached to browser `window` global.
+Faded constructor is then attached to browser `window` global.
 ```javascript
-window.Fog("list_to_fog");
+window.Faded("list_to_faded");
 ```
 
 ### CommonJS
 ```javascript
-var Fog = require("./path/to/fog.min.js");
+var Faded = require("./path/to/faded.min.js");
 ```
 
 ### RequireJS
 ```javascript
-define('module/id/string', ["./path/to/fog.min.js"],
-function(Fog){
-  // Fog Usage
+define('module/id/string', ["./path/to/faded.min.js"],
+function(Faded){
+  // Faded Usage
 });
 ```
 
 
 ## API
-### Fog(element[, opts])
+### Faded(element[, opts])
 #### element
 **Type:** `<String>|<HTMLElement>`
 
@@ -48,14 +48,14 @@ function(Fog){
 **Ex:**
 ```js
 // HTMLElement ID
-Fog("#listID");
+Faded("#listID");
 
 // HTMLElement class
-Fog(".list_class_name.active");
+Faded(".list_class_name.active");
 
 // HTMLElement reference
 var node = document.getElementById("listID");
-Fog(node);
+Faded(node);
 ```
 
 
@@ -68,7 +68,7 @@ Fog(node);
 **Ex:**
 ```js
 var opts = {};
-Fog("listID", opts);
+Faded("listID", opts);
 ```
 
 #### opts.range
@@ -81,7 +81,7 @@ Fog("listID", opts);
 var opts = {
   range: 0.6
 };
-Fog("listID", opts);
+Faded("listID", opts);
 ```
 
 #### opts.style
@@ -97,7 +97,7 @@ var opts = {
     max: "#FFF"
   }
 };
-Fog("listID", opts);
+Faded("listID", opts);
 ```
 
 
